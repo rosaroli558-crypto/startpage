@@ -34,37 +34,25 @@ document.addEventListener("DOMContentLoaded", () => {
     greetingEl.textContent = text;
   }
 
+  document.addEventListener("DOMContentLoaded", () => {
+
   /* ================= SHORTCUT DATA ================= */
   const defaultShortcuts = {
     g: "https://www.google.com",
     y: "https://www.youtube.com",
     q: "https://web.whatsapp.com",
-    c: "https://chat.openai.com",
+    c: "https://chat.openai.com"
   };
 
-  function loadShortcuts() {
-    try {
-      const saved = JSON.parse(localStorage.getItem("shortcuts"));
-      return saved || defaultShortcuts;
-    } catch {
-      return defaultShortcuts;
-    }
-  }
-
-  let shortcuts = loadShortcuts();
+  let shortcuts = JSON.parse(localStorage.getItem("shortcuts")) || defaultShortcuts;
   localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
 
-  /* ================= SHORTCUT TOGGLE ================= */
+  /* ================= TOGGLE ================= */
+  let shortcutEnabled = localStorage.getItem("shortcutEnabled") !== "false";
   const toggleIcon = document.getElementById("shortcutToggle");
-  const shortcutBox = document.querySelector(".shortcuts");
-
-  let shortcutEnabled =
-    localStorage.getItem("shortcutEnabled") !== "false";
 
   function renderToggle() {
-    if (toggleIcon) {
-      toggleIcon.textContent = shortcutEnabled ? "🟢" : "🔴";
-    }
+    toggleIcon.textContent = shortcutEnabled ? "🟢" : "🔴";
   }
 
   function toggleShortcut() {
@@ -73,21 +61,18 @@ document.addEventListener("DOMContentLoaded", () => {
     renderToggle();
   }
 
-  if (toggleIcon) {
-    toggleIcon.addEventListener("click", toggleShortcut);
-  }
+  toggleIcon.addEventListener("click", toggleShortcut);
 
-  /* ================= KEYBOARD HANDLER ================= */
+  /* ================= KEYBOARD ================= */
   document.addEventListener("keydown", (e) => {
 
-    // CTRL + SHIFT + X → ON/OFF shortcut
+    // CTRL + SHIFT + X
     if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "x") {
       e.preventDefault();
       toggleShortcut();
       return;
     }
 
-    // CTRL + key → buka shortcut
     if (shortcutEnabled && e.ctrlKey) {
       const key = e.key.toLowerCase();
       if (shortcuts[key]) {
@@ -95,85 +80,70 @@ document.addEventListener("DOMContentLoaded", () => {
         window.open(shortcuts[key], "_blank");
       }
     }
-
-    // ALT → tampilkan daftar shortcut
-    if (e.key === "Alt" && shortcutBox) {
-      shortcutBox.style.opacity = "1";
-    }
   });
 
-  document.addEventListener("keyup", (e) => {
-    if (e.key === "Alt" && shortcutBox) {
-      shortcutBox.style.opacity = "0";
-    }
-  });
-
-  /* ================= EDIT SHORTCUT ================= */
+  /* ================= EDIT MODAL ================= */
   const editBtn = document.getElementById("editShortcutBtn");
-  const editModal = document.getElementById("editModal");
+  const modal = document.getElementById("editModal");
   const form = document.getElementById("shortcutForm");
 
-  if (editBtn && editModal) {
-    editBtn.addEventListener("click", () => {
-      editModal.style.display = "block";
-      renderForm();
-    });
-  }
+  editBtn.addEventListener("click", () => {
+    modal.style.display = "block";
+    renderForm();
+  });
 
   function renderForm() {
-    if (!form) return;
     form.innerHTML = "";
 
     Object.entries(shortcuts).forEach(([key, url]) => {
-      const row = document.createElement("div");
-      row.className = "shortcut-row";
-
-      row.innerHTML = `
-        <input type="text" value="${key}" disabled>
-        <input type="url" value="${url}" data-key="${key}">
-        <button type="button" data-del="${key}">🗑</button>
-      `;
-
-      form.appendChild(row);
+      form.insertAdjacentHTML("beforeend", `
+        <div class="shortcut-row">
+          <input class="key" value="${key}" disabled>
+          <input class="url" data-key="${key}" value="${url}">
+          <button data-del="${key}">🗑</button>
+        </div>
+      `);
     });
 
-    // tombol tambah
-    const addBtn = document.createElement("button");
-    addBtn.type = "button";
-    addBtn.textContent = "+ Tambah";
-    addBtn.onclick = addShortcut;
-    form.appendChild(addBtn);
+    form.insertAdjacentHTML("beforeend", `
+      <button id="addShortcut" type="button">+ Tambah</button>
+    `);
   }
 
-  function addShortcut() {
-    const key = prompt("Key shortcut (1 huruf):");
-    const url = prompt("URL:");
-
-    if (!key || !url) return;
-
-    shortcuts[key.toLowerCase()] = url;
-    saveShortcuts();
-    renderForm();
-  }
-
-  form?.addEventListener("input", (e) => {
-    if (e.target.dataset.key) {
-      shortcuts[e.target.dataset.key] = e.target.value;
-      saveShortcuts();
+  /* ================= EVENT DELEGATION (INI KUNCINYA) ================= */
+  document.addEventListener("input", (e) => {
+    if (e.target.classList.contains("url")) {
+      const key = e.target.dataset.key;
+      shortcuts[key] = e.target.value;
+      localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
     }
   });
 
-  form?.addEventListener("click", (e) => {
+  document.addEventListener("click", (e) => {
+
+    // hapus
     if (e.target.dataset.del) {
       delete shortcuts[e.target.dataset.del];
-      saveShortcuts();
+      localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+      renderForm();
+    }
+
+    // tambah
+    if (e.target.id === "addShortcut") {
+      const key = prompt("Key (1 huruf):");
+      const url = prompt("URL:");
+
+      if (!key || !url) return;
+
+      shortcuts[key.toLowerCase()] = url;
+      localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
       renderForm();
     }
   });
 
-  function saveShortcuts() {
-    localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
-  }
+  renderToggle();
+});
+
 
   /* ================= INIT ================= */
   renderToggle();
