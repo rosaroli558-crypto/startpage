@@ -104,3 +104,7 @@ body {
   background: #b33;
   color: white;
 }
+
+.hidden {
+  display: none;
+}
