@@ -108,6 +108,70 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  const editor = document.getElementById("shortcutEditor");
+const shortcutList = document.getElementById("shortcutList");
+const closeEditor = document.getElementById("closeEditor");
+const addBtn = document.getElementById("addShortcut");
+
+// buka editor
+editBtn.addEventListener("click", () => {
+  renderShortcutEditor();
+  editor.classList.remove("hidden");
+});
+
+// tutup editor
+closeEditor.addEventListener("click", () => {
+  editor.classList.add("hidden");
+});
+
+// render list
+function renderShortcutEditor() {
+  shortcutList.innerHTML = "";
+
+  Object.keys(shortcuts).forEach((key) => {
+    const row = document.createElement("div");
+    row.className = "shortcut-row";
+
+    row.innerHTML = `
+      <input value="${key}" disabled />
+      <input value="${shortcuts[key]}" />
+      <button data-key="${key}">🗑️</button>
+    `;
+
+    // update URL
+    row.querySelectorAll("input")[1].addEventListener("change", (e) => {
+      shortcuts[key] = e.target.value;
+      saveShortcuts();
+    });
+
+    // delete
+    row.querySelector("button").addEventListener("click", () => {
+      delete shortcuts[key];
+      saveShortcuts();
+      renderShortcutEditor();
+    });
+
+    shortcutList.appendChild(row);
+  });
+}
+
+// tambah shortcut
+addBtn.addEventListener("click", () => {
+  const key = prompt("Key (1 huruf)");
+  const url = prompt("URL");
+
+  if (!key || !url) return;
+
+  shortcuts[key.toLowerCase()] = url;
+  saveShortcuts();
+  renderShortcutEditor();
+});
+
+// save
+function saveShortcuts() {
+  localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+}
+
   // ================= INIT =================
   renderToggle();
   updateBackground();
