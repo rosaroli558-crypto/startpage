@@ -1,41 +1,5 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  /* ================= BACKGROUND ================= */
-  const dayBg =
-    "https://raw.githubusercontent.com/rosaroli558-crypto/bg-pikachu/main/bg-firefox-day.jpg";
-  const nightBg =
-    "https://raw.githubusercontent.com/rosaroli558-crypto/bg-pikachu/main/bg-firefox-night.jpg";
-
-  function updateBackground() {
-    const hour = new Date().getHours();
-    document.body.style.backgroundImage =
-      hour >= 6 && hour < 18 ? `url(${dayBg})` : `url(${nightBg})`;
-  }
-
-  /* ================= CLOCK ================= */
-  const clockEl = document.getElementById("clock");
-  function updateClock() {
-    if (clockEl) {
-      clockEl.textContent = new Date().toLocaleTimeString();
-    }
-  }
-
-  /* ================= GREETING ================= */
-  const greetingEl = document.getElementById("greeting");
-  function updateGreeting() {
-    if (!greetingEl) return;
-
-    const hour = new Date().getHours();
-    let text = "Saatnya Kita Kerja...";
-
-    if (hour < 12) text = "Belum Tidur?";
-    else if (hour < 18) text = "Udah Bangun Nih";
-
-    greetingEl.textContent = text;
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-
   /* ================= SHORTCUT DATA ================= */
   const defaultShortcuts = {
     g: "https://www.google.com",
@@ -142,16 +106,4 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   renderToggle();
-});
-
-
-  /* ================= INIT ================= */
-  renderToggle();
-  updateBackground();
-  updateGreeting();
-  updateClock();
-
-  setInterval(updateClock, 1000);
-  setInterval(updateGreeting, 60000);
-  setInterval(updateBackground, 60000);
 });
