@@ -26,12 +26,21 @@ function updateGreeting() {
 }
 
 // ===== SHORTCUTS =====
-const shortcuts = {
+const defaultShortcuts = {
   g: "https://www.google.com",
   y: "https://www.youtube.com",
   q: "https://web.whatsapp.com",
   c: "https://chat.openai.com"
 };
+
+function loadShortcuts() {
+  const saved = localStorage.getItem("shortcuts");
+  return saved ? JSON.parse(saved) : defaultShortcuts;
+}
+
+let shortcuts = loadShortcuts();
+localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+
 
 let shortcutEnabled = true;
 const toggleIcon = document.getElementById("shortcutToggle");
@@ -51,7 +60,7 @@ document.addEventListener("keydown", (e) => {
     window.open(shortcuts[e.key], "_blank");
   }
 
-  if (e.ctrlKey && e.shiftKey && e.key === "z") {
+  if (e.ctrlKey && e.shiftKey && e.key === "x") {
     toggleShortcut();
   }
 
@@ -62,6 +71,22 @@ document.addEventListener("keydown", (e) => {
 
 document.addEventListener("keyup", (e) => {
   if (e.key === "Alt") shortcutBox.style.opacity = "0";
+});
+
+document.addEventListener("keydown", (e) => {
+  if (!shortcutEnabled) return;
+
+  if (e.ctrlKey && shortcuts[e.key]) {
+    window.open(shortcuts[e.key], "_blank");
+  }
+
+  if (e.ctrlKey && e.shiftKey && e.key === "x") {
+    toggleShortcut();
+  }
+
+  if (e.key === "Alt") {
+    shortcutBox.style.opacity = "1";
+  }
 });
 
 // ===== INIT =====
