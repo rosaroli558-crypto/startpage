@@ -7,20 +7,44 @@ body {
   color: white;
 }
 
+/* JAM */
 .clock {
   position: fixed;
-  top: 20px;
-  right: 30px;
-  font-size: 32px;
+  top: 30%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 48px;
+  font-weight: bold;
 }
 
+/* SALAM */
 .greeting {
   position: fixed;
-  top: 60px;
-  right: 30px;
-  font-size: 18px;
+  top: 38%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 20px;
+  opacity: 0.85;
 }
 
+/* SEARCH */
+.search-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.search-box input {
+  padding: 14px 18px;
+  font-size: 18px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  width: 280px;
+}
+
+/* SHORTCUT INFO */
 .shortcuts {
   position: fixed;
   bottom: 20px;
@@ -30,25 +54,11 @@ body {
   font-size: 14px;
 }
 
+/* TOGGLE */
 .shortcut-toggle {
   position: fixed;
   bottom: 20px;
   right: 20px;
   cursor: pointer;
   font-size: 22px;
-}
-
-.search-box {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.search-box input {
-  padding: 12px 16px;
-  font-size: 18px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
 }
