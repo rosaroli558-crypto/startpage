@@ -1,39 +1,31 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <title>My Startpage</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <title>Startpage</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-  <div class="clock" id="clock"></div>
-  <div class="greeting" id="greeting"></div>
-
-  <div class="search-box">
-    <form action="https://www.google.com/search">
-      <input name="q" placeholder="Cari sesuatu..." autofocus />
-    </form>
-  </div>
+  <div id="greeting"></div>
+  <div id="clock"></div>
 
   <div class="shortcuts">
     Ctrl+G Google | Ctrl+Y YouTube | Ctrl+Q WhatsApp | Ctrl+C ChatGPT
   </div>
 
   <div id="shortcutToggle">🟢</div>
-  <button id="editShortcut">✏️ Edit Shortcut</button>
-  <div id="shortcutEditor" class="editor hidden">
-  <h3>Edit Shortcuts</h3>
+  <button id="editShortcutBtn">Edit Shortcut</button>
 
-  <div id="shortcutList"></div>
+  <!-- MODAL EDIT -->
+  <div id="editModal">
+    <div class="modal-box">
+      <h3>Edit Shortcut</h3>
+      <div id="shortcutForm"></div>
+      <button onclick="closeModal()">Tutup</button>
+    </div>
+  </div>
 
-  <button id="addShortcut">➕ Tambah</button>
-  <button id="closeEditor">❌ Tutup</button>
-</div>
-
-  <!-- JS WAJIB di bawah -->
   <script src="script.js"></script>
 </body>
 </html>
-
