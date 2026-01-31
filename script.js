@@ -1,109 +1,147 @@
-document.addEventListener("DOMContentLoaded", () => {
+// ================= BACKGROUND =================
+const dayBg =
+  "https://raw.githubusercontent.com/rosaroli558-crypto/bg-pikachu/main/bg-firefox-day.jpg";
+const nightBg =
+  "https://raw.githubusercontent.com/rosaroli558-crypto/bg-pikachu/main/bg-firefox-night.jpg";
 
-  /* ================= SHORTCUT DATA ================= */
-  const defaultShortcuts = {
-    g: "https://www.google.com",
-    y: "https://www.youtube.com",
-    q: "https://web.whatsapp.com",
-    c: "https://chat.openai.com"
-  };
+function updateBackground() {
+  const h = new Date().getHours();
+  document.body.style.backgroundImage =
+    h >= 6 && h < 18 ? `url(${dayBg})` : `url(${nightBg})`;
+}
 
-  let shortcuts = JSON.parse(localStorage.getItem("shortcuts")) || defaultShortcuts;
-  localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+// ================= CLOCK & GREETING =================
+function updateClock() {
+  document.getElementById("clock").textContent =
+    new Date().toLocaleTimeString();
+}
 
-  /* ================= TOGGLE ================= */
-  let shortcutEnabled = localStorage.getItem("shortcutEnabled") !== "false";
-  const toggleIcon = document.getElementById("shortcutToggle");
+function updateGreeting() {
+  const h = new Date().getHours();
+  let t = "Saatnya Kita Kerja...";
+  if (h < 12) t = "Belum Tidur?";
+  else if (h < 18) t = "Udah Bangun Nih";
+  document.getElementById("greeting").textContent = t;
+}
 
-  function renderToggle() {
-    toggleIcon.textContent = shortcutEnabled ? "🟢" : "🔴";
-  }
+// ================= SHORTCUT DATA =================
+const defaultShortcuts = {
+  g: "https://www.google.com",
+  y: "https://www.youtube.com",
+  q: "https://web.whatsapp.com",
+  c: "https://chat.openai.com"
+};
 
-  function toggleShortcut() {
-    shortcutEnabled = !shortcutEnabled;
-    localStorage.setItem("shortcutEnabled", shortcutEnabled);
-    renderToggle();
-  }
+let shortcuts =
+  JSON.parse(localStorage.getItem("shortcuts")) || defaultShortcuts;
+localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
 
-  toggleIcon.addEventListener("click", toggleShortcut);
+// ================= TOGGLE =================
+let shortcutEnabled =
+  localStorage.getItem("shortcutEnabled") !== "false";
 
-  /* ================= KEYBOARD ================= */
-  document.addEventListener("keydown", (e) => {
+const toggleIcon = document.getElementById("shortcutToggle");
 
-    // CTRL + SHIFT + X
-    if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "x") {
-      e.preventDefault();
-      toggleShortcut();
-      return;
-    }
+function renderToggle() {
+  toggleIcon.textContent = shortcutEnabled ? "🟢" : "🔴";
+}
 
-    if (shortcutEnabled && e.ctrlKey) {
-      const key = e.key.toLowerCase();
-      if (shortcuts[key]) {
-        e.preventDefault();
-        window.open(shortcuts[key], "_blank");
-      }
-    }
-  });
-
-  /* ================= EDIT MODAL ================= */
-  const editBtn = document.getElementById("editShortcutBtn");
-  const modal = document.getElementById("editModal");
-  const form = document.getElementById("shortcutForm");
-
-  editBtn.addEventListener("click", () => {
-    modal.style.display = "block";
-    renderForm();
-  });
-
-  function renderForm() {
-    form.innerHTML = "";
-
-    Object.entries(shortcuts).forEach(([key, url]) => {
-      form.insertAdjacentHTML("beforeend", `
-        <div class="shortcut-row">
-          <input class="key" value="${key}" disabled>
-          <input class="url" data-key="${key}" value="${url}">
-          <button data-del="${key}">🗑</button>
-        </div>
-      `);
-    });
-
-    form.insertAdjacentHTML("beforeend", `
-      <button id="addShortcut" type="button">+ Tambah</button>
-    `);
-  }
-
-  /* ================= EVENT DELEGATION (INI KUNCINYA) ================= */
-  document.addEventListener("input", (e) => {
-    if (e.target.classList.contains("url")) {
-      const key = e.target.dataset.key;
-      shortcuts[key] = e.target.value;
-      localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
-    }
-  });
-
-  document.addEventListener("click", (e) => {
-
-    // hapus
-    if (e.target.dataset.del) {
-      delete shortcuts[e.target.dataset.del];
-      localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
-      renderForm();
-    }
-
-    // tambah
-    if (e.target.id === "addShortcut") {
-      const key = prompt("Key (1 huruf):");
-      const url = prompt("URL:");
-
-      if (!key || !url) return;
-
-      shortcuts[key.toLowerCase()] = url;
-      localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
-      renderForm();
-    }
-  });
-
+function toggleShortcut() {
+  shortcutEnabled = !shortcutEnabled;
+  localStorage.setItem("shortcutEnabled", shortcutEnabled);
   renderToggle();
+}
+
+toggleIcon.onclick = toggleShortcut;
+
+// ================= KEYBOARD =================
+document.addEventListener("keydown", (e) => {
+
+  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "x") {
+    e.preventDefault();
+    toggleShortcut();
+    return;
+  }
+
+  if (shortcutEnabled && e.ctrlKey) {
+    const k = e.key.toLowerCase();
+    if (shortcuts[k]) {
+      e.preventDefault();
+      window.open(shortcuts[k], "_blank");
+    }
+  }
+
+  if (e.key === "Alt") {
+    document.querySelector(".shortcuts").style.opacity = 1;
+  }
 });
+
+document.addEventListener("keyup", (e) => {
+  if (e.key === "Alt") {
+    document.querySelector(".shortcuts").style.opacity = 0;
+  }
+});
+
+// ================= EDIT MODAL =================
+const modal = document.getElementById("editModal");
+const form = document.getElementById("shortcutForm");
+
+document.getElementById("editShortcutBtn").onclick = () => {
+  modal.style.display = "block";
+  renderForm();
+};
+
+function closeModal() {
+  modal.style.display = "none";
+}
+
+function renderForm() {
+  form.innerHTML = "";
+
+  for (const k in shortcuts) {
+    form.innerHTML += `
+      <div class="shortcut-row">
+        <input value="${k}" disabled>
+        <input data-key="${k}" value="${shortcuts[k]}">
+        <button data-del="${k}">🗑</button>
+      </div>
+    `;
+  }
+
+  form.innerHTML += `<button id="add">+ Tambah</button>`;
+}
+
+// EVENT DELEGATION
+document.addEventListener("input", (e) => {
+  if (e.target.dataset.key) {
+    shortcuts[e.target.dataset.key] = e.target.value;
+    localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+  }
+});
+
+document.addEventListener("click", (e) => {
+  if (e.target.dataset.del) {
+    delete shortcuts[e.target.dataset.del];
+    localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+    renderForm();
+  }
+
+  if (e.target.id === "add") {
+    const k = prompt("Key (1 huruf)");
+    const u = prompt("URL");
+    if (!k || !u) return;
+    shortcuts[k.toLowerCase()] = u;
+    localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+    renderForm();
+  }
+});
+
+// ================= INIT =================
+updateBackground();
+updateGreeting();
+updateClock();
+renderToggle();
+
+setInterval(updateClock, 1000);
+setInterval(updateGreeting, 60000);
+setInterval(updateBackground, 60000);
