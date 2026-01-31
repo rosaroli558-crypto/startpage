@@ -1,0 +1,54 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  color: white;
+}
+
+.clock {
+  position: fixed;
+  top: 20px;
+  right: 30px;
+  font-size: 32px;
+}
+
+.greeting {
+  position: fixed;
+  top: 60px;
+  right: 30px;
+  font-size: 18px;
+}
+
+.shortcuts {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-size: 14px;
+}
+
+.shortcut-toggle {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  cursor: pointer;
+  font-size: 22px;
+}
+
+.search-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.search-box input {
+  padding: 12px 16px;
+  font-size: 18px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+}
