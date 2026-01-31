@@ -51,7 +51,7 @@ document.addEventListener("keydown", (e) => {
     window.open(shortcuts[e.key], "_blank");
   }
 
-  if (e.ctrlKey && e.shiftKey && e.key === "x") {
+  if (e.shiftKey && e.key === "x") {
     toggleShortcut();
   }
 
@@ -61,7 +61,7 @@ document.addEventListener("keydown", (e) => {
 });
 
 document.addEventListener("keyup", (e) => {
-  if (e.key === "Alt") shortcutBox.style.opacity = "0";
+  if (e.key === "Shift") shortcutBox.style.opacity = "0";
 });
 
 // ===== INIT =====
