@@ -51,11 +51,11 @@ document.addEventListener("keydown", (e) => {
     window.open(shortcuts[e.key], "_blank");
   }
 
-  if (e.ctrlKey && e.shiftKey && e.key === "z") {
+  if (e.ctrlKey && e.shiftKey && e.key === "x") {
     toggleShortcut();
   }
 
-  if (e.key === "Alt") {
+  if (e.key === "Shift") {
     shortcutBox.style.opacity = "1";
   }
 });
