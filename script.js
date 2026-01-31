@@ -74,19 +74,6 @@ document.addEventListener("keyup", (e) => {
 });
 
 // ===== EDIT SHORTCUT =====
-editBtn.addEventListener("click", () => {
-  const key = prompt("Shortcut key (contoh: g, y)");
-  if (!key) return;
-
-  const url = prompt("Masukkan URL:");
-  if (!url) return;
-
-  shortcuts[key.toLowerCase()] = url;
-  localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
-
-  alert(`Ctrl + ${key} berhasil disimpan`);
-});
-
 const editor = document.getElementById("shortcutEditor");
 const shortcutList = document.getElementById("shortcutList");
 const closeEditor = document.getElementById("closeEditor");
