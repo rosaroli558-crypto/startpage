@@ -108,7 +108,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  const editor = document.getElementById("shortcutEditor");
+const editor = document.getElementById("shortcutEditor");
 const shortcutList = document.getElementById("shortcutList");
 const closeEditor = document.getElementById("closeEditor");
 const addBtn = document.getElementById("addShortcut");
