@@ -51,7 +51,11 @@ document.addEventListener("keydown", (e) => {
     window.open(shortcuts[e.key], "_blank");
   }
 
-  if (e.ctrlKey && e.shiftKey && e.key === "x") {
+  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "x") {
+    e.preventDefault();
+    toggleShortcut();
+  }
+
     toggleShortcut();
   }
 
