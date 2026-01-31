@@ -48,7 +48,7 @@ body {
 .shortcuts {
   position: fixed;
   bottom: 20px;
-  left: 20px;
+  left: 30px;
   opacity: 0;
   transition: opacity 0.3s;
   font-size: 14px;
@@ -58,7 +58,7 @@ body {
 .shortcut-toggle {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  left: 20px;
   cursor: pointer;
   font-size: 22px;
 }
