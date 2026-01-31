@@ -75,23 +75,32 @@ body {
   color: white;
 }
 
-.editor input {
-  width: 100%;
-  margin: 5px 0;
-  padding: 6px;
-}
-
-.editor button {
-  margin-top: 10px;
-  width: 100%;
-  padding: 8px;
-  cursor: pointer;
-}
-
-.hidden {
-  display: none;
-}
-
 .shortcut-row {
-  margin-bottom: 10px;
+  display: grid;
+  grid-template-columns: 90px 1fr 40px;
+  gap: 6px;
+  margin-bottom: 8px;
+  align-items: center;
+}
+
+.shortcut-row input {
+  padding: 6px;
+  font-size: 13px;
+  border-radius: 6px;
+  border: none;
+}
+
+.shortcut-row input:disabled {
+  background: #444;
+  color: #ccc;
+  text-align: center;
+}
+
+.shortcut-row button {
+  height: 32px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  background: #b33;
+  color: white;
 }
