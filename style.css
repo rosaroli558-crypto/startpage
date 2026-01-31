@@ -1,110 +1,71 @@
-* {
-  box-sizing: border-box;
-  font-family: Arial, sans-serif;
-}
-
 body {
   margin: 0;
   height: 100vh;
   background-size: cover;
   background-position: center;
+  font-family: Arial, sans-serif;
   color: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
 }
 
-.clock {
-  font-size: 48px;
-  font-weight: bold;
+#greeting {
+  position: absolute;
+  top: 30px;
+  width: 100%;
+  text-align: center;
+  font-size: 28px;
 }
 
-.greeting {
-  font-size: 24px;
-  margin-bottom: 20px;
-}
-
-.search-box input {
-  padding: 12px;
-  width: 300px;
-  border-radius: 8px;
-  border: none;
-  font-size: 16px;
+#clock {
+  position: absolute;
+  top: 70px;
+  width: 100%;
+  text-align: center;
+  font-size: 22px;
 }
 
 .shortcuts {
   position: fixed;
-  bottom: 20px;
-  left: 20px;
-  background: rgba(0,0,0,0.5);
-  padding: 10px 14px;
-  border-radius: 8px;
+  bottom: 10px;
+  left: 10px;
   opacity: 0;
-  transition: 0.3s;
-  font-size: 14px;
+  transition: .3s;
 }
 
 #shortcutToggle {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  font-size: 28px;
+  bottom: 10px;
+  right: 10px;
+  font-size: 24px;
   cursor: pointer;
 }
 
-#editShortcut {
+#editShortcutBtn {
   position: fixed;
-  bottom: 70px;
-  right: 20px;
-  padding: 8px 12px;
-  border-radius: 6px;
-  border: none;
-  cursor: pointer;
+  bottom: 50px;
+  right: 10px;
 }
 
-.editor {
+/* MODAL */
+#editModal {
+  display: none;
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(0,0,0,0.85);
-  padding: 20px;
-  border-radius: 12px;
-  width: 345px;
-  color: white;
+  inset: 0;
+  background: rgba(0,0,0,.6);
+}
+
+.modal-box {
+  background: #111;
+  padding: 15px;
+  width: 320px;
+  margin: 80px auto;
 }
 
 .shortcut-row {
-  display: grid;
-  grid-template-columns: 90px 1fr 40px;
-  gap: 6px;
-  margin-bottom: 8px;
-  align-items: center;
+  display: flex;
+  gap: 5px;
+  margin-bottom: 5px;
 }
 
 .shortcut-row input {
-  padding: 6px;
-  font-size: 13px;
-  border-radius: 6px;
-  border: none;
-}
-
-.shortcut-row input:disabled {
-  background: #444;
-  color: #ccc;
-  text-align: center;
-}
-
-.shortcut-row button {
-  height: 32px;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  background: #b33;
-  color: white;
-}
-
-.hidden {
-  display: none;
+  flex: 1;
 }
