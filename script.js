@@ -12,101 +12,86 @@ function updateBackground() {
 
 // ===== CLOCK =====
 function updateClock() {
-  const clock = document.getElementById("clock");
-  if (!clock) return;
-  clock.textContent = new Date().toLocaleTimeString();
+  document.getElementById("clock").textContent =
+    new Date().toLocaleTimeString();
 }
 
 // ===== GREETING =====
 function updateGreeting() {
-  const greeting = document.getElementById("greeting");
-  if (!greeting) return;
-
   const hour = new Date().getHours();
   let text = "Saatnya Kita Kerja...";
 
   if (hour < 12) text = "Belum Tidur?";
   else if (hour < 18) text = "Udah Bangun Nih";
 
-  greeting.textContent = text;
+  document.getElementById("greeting").textContent = text;
 }
 
-// ===== SHORTCUTS =====
+// ===== SHORTCUT DATA =====
 const defaultShortcuts = {
   g: "https://www.google.com",
   y: "https://www.youtube.com",
   q: "https://web.whatsapp.com",
-  c: "https://chat.openai.com",
+  c: "https://chat.openai.com"
 };
 
-// load shortcuts
-function loadShortcuts() {
-  const saved = localStorage.getItem("shortcuts");
-  return saved ? JSON.parse(saved) : defaultShortcuts;
-}
+let shortcuts =
+  JSON.parse(localStorage.getItem("shortcuts")) || defaultShortcuts;
 
-let shortcuts = loadShortcuts();
-localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+let shortcutEnabled =
+  localStorage.getItem("shortcutEnabled") !== "false";
 
-// ===== SHORTCUT TOGGLE =====
-let shortcutEnabled = localStorage.getItem("shortcutEnabled");
-shortcutEnabled = shortcutEnabled !== "false"; // default ON
-
+// ===== ELEMENT =====
 const toggleIcon = document.getElementById("shortcutToggle");
 const shortcutBox = document.querySelector(".shortcuts");
+const editBtn = document.getElementById("editShortcut");
 
-function updateToggleIcon() {
-  if (!toggleIcon) return;
-  toggleIcon.textContent = shortcutEnabled ? "🟢" : "🔴";
-}
-
+// ===== TOGGLE =====
 function toggleShortcut() {
   shortcutEnabled = !shortcutEnabled;
+  toggleIcon.textContent = shortcutEnabled ? "🟢" : "🔴";
   localStorage.setItem("shortcutEnabled", shortcutEnabled);
-  updateToggleIcon();
 }
 
-// click toggle icon
-if (toggleIcon) {
-  toggleIcon.addEventListener("click", toggleShortcut);
-}
+toggleIcon.addEventListener("click", toggleShortcut);
 
-// ===== KEYBOARD HANDLER =====
+// ===== KEYBOARD =====
 document.addEventListener("keydown", (e) => {
-  // TOGGLE ON / OFF → Ctrl + Shift + X
-  if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "x") {
-    e.preventDefault();
+  if (e.ctrlKey && e.shiftKey && e.key === "x") {
     toggleShortcut();
     return;
   }
 
-  // kalau shortcut OFF, STOP
-  if (!shortcutEnabled) return;
-
-  // buka shortcut → Ctrl + key
-  const key = e.key.toLowerCase();
-  if (e.ctrlKey && shortcuts[key]) {
-    e.preventDefault();
-    window.open(shortcuts[key], "_blank");
+  if (shortcutEnabled && e.ctrlKey && shortcuts[e.key]) {
+    window.open(shortcuts[e.key], "_blank");
   }
 
-  // tampilkan daftar shortcut
-  if (e.key === "Alt" && shortcutBox) {
-    shortcutBox.style.opacity = "1";
-  }
+  if (e.key === "Alt") shortcutBox.style.opacity = "1";
 });
 
 document.addEventListener("keyup", (e) => {
-  if (e.key === "Alt" && shortcutBox) {
-    shortcutBox.style.opacity = "0";
-  }
+  if (e.key === "Alt") shortcutBox.style.opacity = "0";
+});
+
+// ===== EDIT SHORTCUT =====
+editBtn.addEventListener("click", () => {
+  const key = prompt("Shortcut key (contoh: g, y)");
+  if (!key) return;
+
+  const url = prompt("Masukkan URL:");
+  if (!url) return;
+
+  shortcuts[key.toLowerCase()] = url;
+  localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+
+  alert(`Ctrl + ${key} berhasil disimpan`);
 });
 
 // ===== INIT =====
 updateBackground();
 updateGreeting();
 updateClock();
-updateToggleIcon();
+toggleIcon.textContent = shortcutEnabled ? "🟢" : "🔴";
 
 setInterval(updateClock, 1000);
 setInterval(updateGreeting, 60000);
