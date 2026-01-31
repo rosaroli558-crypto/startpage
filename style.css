@@ -62,3 +62,36 @@ body {
   border: none;
   cursor: pointer;
 }
+
+.editor {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0,0,0,0.85);
+  padding: 20px;
+  border-radius: 12px;
+  width: 300px;
+  color: white;
+}
+
+.editor input {
+  width: 100%;
+  margin: 5px 0;
+  padding: 6px;
+}
+
+.editor button {
+  margin-top: 10px;
+  width: 100%;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+.shortcut-row {
+  margin-bottom: 10px;
+}
