@@ -64,13 +64,13 @@ document.addEventListener("keydown", (e) => {
     toggleShortcut();
   }
 
-  if (e.key === "Alt") {
+  if (e.key === "Shift") {
     shortcutBox.style.opacity = "1";
   }
 });
 
 document.addEventListener("keyup", (e) => {
-  if (e.key === "Alt") shortcutBox.style.opacity = "0";
+  if (e.key === "Shift") shortcutBox.style.opacity = "0";
 });
 
 document.addEventListener("keydown", (e) => {
