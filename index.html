@@ -2,27 +2,29 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8" />
-  <title>Startpage</title>
+  <title>My Startpage</title>
   <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-  <div id="greeting" class="greeting"></div>
-  <div id="clock" class="clock"></div>
+  <div class="clock" id="clock"></div>
+  <div class="greeting" id="greeting"></div>
+
+  <div class="search-box">
+    <form action="https://www.google.com/search">
+      <input name="q" placeholder="Cari sesuatu..." autofocus />
+    </form>
+  </div>
 
   <div class="shortcuts">
     Ctrl+G Google | Ctrl+Y YouTube | Ctrl+Q WhatsApp | Ctrl+C ChatGPT
   </div>
 
-  <div id="shortcutToggle" class="shortcut-toggle">🟢</div>
-
-  <div class="search-box">
-    <form action="https://www.google.com/search" method="GET">
-      <input type="text" name="q" placeholder="Hayo cari apaan..." autofocus />
-    </form>
-  </div>
+  <div id="shortcutToggle">🟢</div>
   <button id="editShortcut">✏️ Edit Shortcut</button>
+
+  <!-- JS WAJIB di bawah -->
   <script src="script.js"></script>
 </body>
 </html>
-
