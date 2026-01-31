@@ -51,7 +51,7 @@ document.addEventListener("keydown", (e) => {
     window.open(shortcuts[e.key], "_blank");
   }
 
-  if (e.shiftKey && e.key === "x") {
+  if (e.ctrlKey && e.shiftKey && e.key === "x") {
     toggleShortcut();
   }
 
