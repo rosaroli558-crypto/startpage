@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
 
-  // ================= BACKGROUND =================
+  /* ================= BACKGROUND ================= */
   const dayBg =
     "https://raw.githubusercontent.com/rosaroli558-crypto/bg-pikachu/main/bg-firefox-day.jpg";
   const nightBg =
@@ -12,7 +12,7 @@ document.addEventListener("DOMContentLoaded", () => {
       hour >= 6 && hour < 18 ? `url(${dayBg})` : `url(${nightBg})`;
   }
 
-  // ================= CLOCK =================
+  /* ================= CLOCK ================= */
   const clockEl = document.getElementById("clock");
   function updateClock() {
     if (clockEl) {
@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ================= GREETING =================
+  /* ================= GREETING ================= */
   const greetingEl = document.getElementById("greeting");
   function updateGreeting() {
     if (!greetingEl) return;
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     greetingEl.textContent = text;
   }
 
-  // ================= SHORTCUT DATA =================
+  /* ================= SHORTCUT DATA ================= */
   const defaultShortcuts = {
     g: "https://www.google.com",
     y: "https://www.youtube.com",
@@ -44,8 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function loadShortcuts() {
     try {
-      const data = JSON.parse(localStorage.getItem("shortcuts"));
-      return data || defaultShortcuts;
+      const saved = JSON.parse(localStorage.getItem("shortcuts"));
+      return saved || defaultShortcuts;
     } catch {
       return defaultShortcuts;
     }
@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", () => {
   let shortcuts = loadShortcuts();
   localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
 
-  // ================= SHORTCUT TOGGLE =================
+  /* ================= SHORTCUT TOGGLE ================= */
   const toggleIcon = document.getElementById("shortcutToggle");
   const shortcutBox = document.querySelector(".shortcuts");
 
@@ -77,17 +77,17 @@ document.addEventListener("DOMContentLoaded", () => {
     toggleIcon.addEventListener("click", toggleShortcut);
   }
 
-  // ================= KEYBOARD HANDLER =================
+  /* ================= KEYBOARD HANDLER ================= */
   document.addEventListener("keydown", (e) => {
 
-    // 🔥 CTRL + SHIFT + X (TOGGLE)
+    // CTRL + SHIFT + X → ON/OFF shortcut
     if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "x") {
       e.preventDefault();
       toggleShortcut();
       return;
     }
 
-    // 🔥 CTRL + KEY SHORTCUT
+    // CTRL + key → buka shortcut
     if (shortcutEnabled && e.ctrlKey) {
       const key = e.key.toLowerCase();
       if (shortcuts[key]) {
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // tampilkan daftar shortcut
+    // ALT → tampilkan daftar shortcut
     if (e.key === "Alt" && shortcutBox) {
       shortcutBox.style.opacity = "1";
     }
@@ -108,7 +108,74 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  // ================= INIT =================
+  /* ================= EDIT SHORTCUT ================= */
+  const editBtn = document.getElementById("editShortcutBtn");
+  const editModal = document.getElementById("editModal");
+  const form = document.getElementById("shortcutForm");
+
+  if (editBtn && editModal) {
+    editBtn.addEventListener("click", () => {
+      editModal.style.display = "block";
+      renderForm();
+    });
+  }
+
+  function renderForm() {
+    if (!form) return;
+    form.innerHTML = "";
+
+    Object.entries(shortcuts).forEach(([key, url]) => {
+      const row = document.createElement("div");
+      row.className = "shortcut-row";
+
+      row.innerHTML = `
+        <input type="text" value="${key}" disabled>
+        <input type="url" value="${url}" data-key="${key}">
+        <button type="button" data-del="${key}">🗑</button>
+      `;
+
+      form.appendChild(row);
+    });
+
+    // tombol tambah
+    const addBtn = document.createElement("button");
+    addBtn.type = "button";
+    addBtn.textContent = "+ Tambah";
+    addBtn.onclick = addShortcut;
+    form.appendChild(addBtn);
+  }
+
+  function addShortcut() {
+    const key = prompt("Key shortcut (1 huruf):");
+    const url = prompt("URL:");
+
+    if (!key || !url) return;
+
+    shortcuts[key.toLowerCase()] = url;
+    saveShortcuts();
+    renderForm();
+  }
+
+  form?.addEventListener("input", (e) => {
+    if (e.target.dataset.key) {
+      shortcuts[e.target.dataset.key] = e.target.value;
+      saveShortcuts();
+    }
+  });
+
+  form?.addEventListener("click", (e) => {
+    if (e.target.dataset.del) {
+      delete shortcuts[e.target.dataset.del];
+      saveShortcuts();
+      renderForm();
+    }
+  });
+
+  function saveShortcuts() {
+    localStorage.setItem("shortcuts", JSON.stringify(shortcuts));
+  }
+
+  /* ================= INIT ================= */
   renderToggle();
   updateBackground();
   updateGreeting();
