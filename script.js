@@ -2,7 +2,7 @@
 const dayBg =
   "https://raw.githubusercontent.com/rosaroli558-crypto/bg-pikachu/main/bg-firefox-day.jpg";
 const nightBg =
-  "https://raw.githubusercontent.com/rosaroli558-crypto/bg-pikachu/main/bg-firefox-ujicoba.jpg";
+  "https://raw.githubusercontent.com/rosaroli558-crypto/bg-pikachu/main/bg-firefox-night.jpg";
 
 function updateBackground() {
   const h = new Date().getHours();
