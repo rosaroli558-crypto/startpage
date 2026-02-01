@@ -40,7 +40,7 @@ body {
   border: none;
   outline: none;
   background: rgba(104, 101, 101, 0.84);
-  color: #938410;
+  color: #fff;
   backdrop-filter: blur(20px);
 }
 
