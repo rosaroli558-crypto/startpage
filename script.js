@@ -18,9 +18,9 @@ function updateClock() {
 
 function updateGreeting() {
   const h = new Date().getHours();
-  let t = "Saatnya Kita Kerja...";
-  if (h < 12) t = "Belum Tidur?";
-  else if (h < 18) t = "Udah Bangun Nih";
+  let t = "Saatnya Kita Kerja";
+  if (h < 9) t = "Tidur Ron Jan Maksain";
+  else if (h < 16) t = "Santai Nih, Ngapain Ya?";
   document.getElementById("greeting").textContent = t;
 }
 
