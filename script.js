@@ -24,6 +24,20 @@ function updateGreeting() {
   document.getElementById("greeting").textContent = t;
 }
 
+// ================= Serch gan... =================
+const searchInput = document.getElementById("search");
+
+searchInput.addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    const query = searchInput.value.trim();
+    if (!query) return;
+
+    const url = "https://www.google.com/search?q=" + encodeURIComponent(query);
+    window.open(url, "_blank");
+    searchInput.value = "";
+  }
+});
+
 // ================= SHORTCUT DATA =================
 const defaultShortcuts = {
   g: "https://www.google.com",
