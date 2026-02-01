@@ -35,16 +35,18 @@ body {
   width: 285px;
   padding: 12px 20px;
   font-size: 16px;
+  text-align: center;
   border-radius: 35px;
   border: none;
   outline: none;
-  background: rgba(0,0,0,0.55);
+  background: rgba(104, 101, 101, 0.84);
   color: #938410;
   backdrop-filter: blur(20px);
 }
 
 #search::placeholder {
-  color: #938410;
+  color: #fff;
+  position: fixed;
 }
 
 .shortcuts {
