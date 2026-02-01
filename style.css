@@ -80,14 +80,14 @@ body {
 .modal-box {
   background: #111;
   padding: 15px;
-  width: 360px;
+  width: 370px;
   margin: 100px auto;
 }
 
 .shortcut-row {
   display: flex;
-  gap: 5px;
-  margin-bottom: 5px;
+  gap: 10px;
+  margin-bottom: 10px;
 }
 
 .shortcut-row input {
