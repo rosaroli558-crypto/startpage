@@ -111,3 +111,42 @@ body {
 .shortcut-row input {
   flex: 1;
 }
+
+/* Gerakin */
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); } /* Naik 10px */
+  100% { transform: translateY(0px); }
+}
+
+#clock, #greeting {
+  animation: float 4s ease-in-out infinite; /* Gerak tiap 4 detik bolak-balik */
+}
+
+#greeting {
+  animation-delay: 0.5s; /* Kasih delay dikit biar nggak barengan sama jam */
+}
+
+#search {
+  transition: all 0.3s ease-in-out;
+}
+
+#search:focus {
+  transform: scale(1.05); /* Membesar dikit pas diklik */
+  box-shadow: 0 0 20px rgba(255, 203, 5, 0.4); /* Glow warna kuning Pikachu */
+  width: 320px; /* Melebar dikit */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; filter: blur(10px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+body {
+  animation: fadeIn 1.2s ease-out;
+}
+
+#shortcutToggle:hover {
+  transform: rotate(20deg) scale(1.2);
+  transition: 0.2s;
+}
