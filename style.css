@@ -150,3 +150,43 @@ body {
   transform: rotate(20deg) scale(1.2);
   transition: 0.2s;
 }
+
+/* ================= PARTICLES ================= */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* Biar nggak nge-block klik mouse */
+  z-index: -1; /* Di belakang semua elemen, tapi di depan background */
+  overflow: hidden;
+}
+
+/* Base style buat tiap partikel */
+.particle {
+  position: absolute;
+  background: rgba(255, 203, 5, 0.3); /* Kuning Pikachu, tipis */
+  border-radius: 50%;
+  animation: fly 15s linear infinite; /* Terbang 15 detik */
+  opacity: 0; /* Mulai dari hilang */
+  box-shadow: 0 0 5px rgba(255, 203, 5, 0.6); /* Sedikit glow */
+}
+
+/* Animasi Terbang Acak */
+@keyframes fly {
+  0% {
+    transform: translateY(110vh) translateX(0) scale(1);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1; /* Muncul dikit */
+  }
+  90% {
+    opacity: 0.8; /* Masih kelihatan */
+  }
+  100% {
+    transform: translateY(-10vh) translateX(50px) scale(0.5); /* Terbang ke atas acak */
+    opacity: 0;
+  }
+}
