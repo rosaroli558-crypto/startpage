@@ -44,9 +44,15 @@ body {
   backdrop-filter: blur(20px);
 }
 
+#search {
+  /* ... kode yang sudah ada ... */
+  transition: all 0.3s ease; /* Biar transisi warnanya smooth */
+}
+
+/* Trick supaya warna placeholder bisa diatur via JS */
 #search::placeholder {
-  color: #fff;
-  position: fixed;
+  color: var(--placeholder-color, #fff); 
+  opacity: 1;
 }
 
 .shortcuts {
