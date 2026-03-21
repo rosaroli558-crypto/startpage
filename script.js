@@ -203,7 +203,7 @@ function createParticles(num) {
     const p = document.createElement("div");
     p.classList.add("particle");
     
-    const size = Math.random() * 5 + 3;
+    const size = Math.random() * 10 + 5;
     p.style.width = `${size}px`;
     p.style.height = `${size}px`;
     p.style.left = `${Math.random() * 100}vw`;
