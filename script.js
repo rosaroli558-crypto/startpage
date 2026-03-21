@@ -6,8 +6,25 @@ const nightBg =
 
 function updateBackground() {
   const h = new Date().getHours();
-  document.body.style.backgroundImage =
-    h >= 6 && h < 18 ? `url(${dayBg})` : `url(${nightBg})`;
+  const isDay = h >= 6 && h < 18;
+  
+  // Ganti Gambar
+  document.body.style.backgroundImage = `url(${isDay ? dayBg : nightBg})`;
+
+  // Ganti Warna Font & UI
+  if (isDay) {
+    // TEMA SIANG (Font Gelap biar kontras sama kuning Pikachu)
+    document.body.style.color = "#333333"; 
+    document.getElementById("clock").style.color = "#222222";
+    document.getElementById("search").style.background = "rgba(0, 0, 0, 0.1)"; // Search bar agak gelap transparan
+    document.getElementById("search").style.color = "#333";
+  } else {
+    // TEMA MALAM (Font Terang)
+    document.body.style.color = "#ffffff";
+    document.getElementById("clock").style.color = "#ffffff";
+    document.getElementById("search").style.background = "rgba(255, 255, 255, 0.2)";
+    document.getElementById("search").style.color = "#fff";
+  }
 }
 
 // ================= CLOCK & GREETING =================
