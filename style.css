@@ -1,32 +1,82 @@
+/* ================= GLOBAL ================= */
 body {
   margin: 0;
   height: 100vh;
   background-size: cover;
   background-position: center;
   font-family: Arial, sans-serif;
-  color: #938410;
+  color: #333; /* Warna gelap biar kebaca di kuning */
+  overflow: hidden; /* Mencegah scrollbar */
+  position: relative;
+  z-index: 0;
+  animation: fadeIn 1.2s ease-out; /* Animasi muncul */
 }
 
-#greeting {
+@keyframes fadeIn {
+  from { opacity: 0; filter: blur(10px); }
+  to { opacity: 1; filter: blur(0); }
+}
+
+/* ================= PARTICLES ================= */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 1; /* Di depan background, di belakang konten utama */
+}
+
+.particle {
   position: absolute;
-  top: 263px;
+  border-radius: 50%;
+  pointer-events: none;
+  bottom: -20px;
+  animation: fly linear infinite; /* Animasi terbang */
+}
+
+@keyframes fly {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+  20% { opacity: 1; }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(-110vh) translateX(50px) scale(0.5); opacity: 0; }
+}
+
+/* ================= MAIN CONTENT ================= */
+#greeting, #clock, .search {
+  position: absolute;
   width: 100%;
   text-align: center;
-  font-size: 28px;
+  z-index: 10; /* Di depan partikel */
 }
 
 #clock {
-  position: absolute;
   top: 162px;
-  width: 100%;
-  text-align: center;
   font-size: 85px;
+  color: #222;
+  font-weight: 800;
+  animation: float 4s ease-in-out infinite;
+}
+
+#greeting {
+  top: 263px;
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  animation: float 4s ease-in-out infinite;
+  animation-delay: 0.5s;
+}
+
+@keyframes float {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
 }
 
 .search {
-  position: absolute;
   top: 312px;
-  width: 100%;
   display: flex;
   justify-content: center;
 }
@@ -39,60 +89,68 @@ body {
   border-radius: 35px;
   border: none;
   outline: none;
-  background: rgba(104, 101, 101, 0.84);
-  color: #fff;
-  backdrop-filter: blur(20px);
+  transition: all 0.3s ease-in-out;
+  /* Placeholder trick */
+  --placeholder-color: #555;
 }
 
-#search {
-  /* ... kode yang sudah ada ... */
-  transition: all 0.3s ease; /* Biar transisi warnanya smooth */
-}
-
-/* Trick supaya warna placeholder bisa diatur via JS */
 #search::placeholder {
-  color: var(--placeholder-color, #fff); 
+  color: var(--placeholder-color);
   opacity: 1;
 }
 
+#search:focus {
+  transform: scale(1.05);
+  width: 320px;
+}
+
+/* ================= SHORTCUTS & UI ================= */
 .shortcuts {
   position: fixed;
   bottom: 15px;
   left: 50px;
   opacity: 0;
   transition: .3s;
+  z-index: 10;
+}
+
+#shortcutToggle, #editShortcutBtn {
+  position: fixed;
+  cursor: pointer;
+  z-index: 10;
+  transition: 0.2s;
 }
 
 #shortcutToggle {
-  position: fixed;
   bottom: 10px;
   left: 10px;
   font-size: 24px;
-  cursor: pointer;
+}
+
+#shortcutToggle:hover {
+  transform: rotate(20deg) scale(1.2);
 }
 
 #editShortcutBtn {
-  position: fixed;
   bottom: 50px;
   left: 10px;
-  font-size: 24px;
   width: 120px;
   font-size: 17px;
   text-align: center;
   border-radius: 25px;
   border: none;
-  outline: none;
   background: rgba(104, 101, 101, 0.84);
   color: #fff;
-  backdrop-filter: blur(20px);
+  padding: 8px;
 }
 
-/* MODAL */
+/* ================= MODAL ================= */
 #editModal {
   display: none;
   position: fixed;
   inset: 0;
   background: rgba(0,0,0,.6);
+  z-index: 100; /* Di depan semua */
 }
 
 .modal-box {
@@ -100,6 +158,8 @@ body {
   padding: 15px;
   width: 370px;
   margin: 100px auto;
+  color: white;
+  border-radius: 10px;
 }
 
 .shortcut-row {
@@ -110,73 +170,5 @@ body {
 
 .shortcut-row input {
   flex: 1;
-}
-
-/* Gerakin */
-@keyframes float {
-  0% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); } /* Naik 10px */
-  100% { transform: translateY(0px); }
-}
-
-#clock, #greeting {
-  animation: float 4s ease-in-out infinite; /* Gerak tiap 4 detik bolak-balik */
-}
-
-#greeting {
-  animation-delay: 0.5s; /* Kasih delay dikit biar nggak barengan sama jam */
-}
-
-#search {
-  transition: all 0.3s ease-in-out;
-}
-
-#search:focus {
-  transform: scale(1.05); /* Membesar dikit pas diklik */
-  box-shadow: 0 0 20px rgba(255, 203, 5, 0.4); /* Glow warna kuning Pikachu */
-  width: 320px; /* Melebar dikit */
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; filter: blur(10px); }
-  to { opacity: 1; filter: blur(0); }
-}
-
-body {
-  animation: fadeIn 1.2s ease-out;
-}
-
-#shortcutToggle:hover {
-  transform: rotate(20deg) scale(1.2);
-  transition: 0.2s;
-}
-
-/* ================= PARTICLES ================= */
-/* Container Partikel */
-.particles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: 0; /* Ubah dari -1 ke 0 */
-  overflow: hidden;
-  pointer-events: none;
-}
-
-/* Elemen Partikel */
-.particle {
-  position: absolute;
-  background: #FFCB05; /* Pakai kuning solid dulu buat ngetes */
-  border-radius: 50%;
-  opacity: 0;
-  pointer-events: none;
-  box-shadow: 0 0 8px rgba(255, 203, 5, 0.8);
-  /* Hapus baris animation: fly... di sini, biar diatur JS 100% */
-}
-
-/* Pastikan elemen lain ada di depan partikel */
-#clock, #greeting, .search, .shortcuts, #shortcutToggle, #editShortcutBtn {
-  z-index: 10;
-  position: relative; /* Wajib ada position biar z-index jalan */
+  padding: 5px;
 }
