@@ -34,9 +34,10 @@ body {
   border-radius: 50%;
   pointer-events: none;
   bottom: -20px;
-  background: var(--particle-color, #FFDF66); 
-  box-shadow: 0 0 8px var(--particle-shadow, rgba(255, 223, 102, 0.8));
-  animation: fly linear infinite; /* Animasi terbang */
+  /* Gunakan variabel CSS dengan fallback warna kuning */
+  background-color: var(--p-color, #FFDF66); 
+  box-shadow: 0 0 10px var(--p-glow, rgba(255, 223, 102, 0.8));
+  animation: fly linear infinite;
 }
 
 @keyframes fly {
