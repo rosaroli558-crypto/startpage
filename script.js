@@ -176,25 +176,26 @@ document.addEventListener("click", (e) => {
 // ================= PARTICLES SYSTEM =================
 function createParticles(num) {
   const container = document.querySelector(".particles");
-  if (!container) return; 
+  if (!container) {
+    console.error("Elemen .particles gak ketemu!");
+    return;
+  }
+
+  console.log("Membuat " + num + " partikel...");
 
   for (let i = 0; i < num; i++) {
     const p = document.createElement("div");
     p.classList.add("particle");
     
-    // Ukuran acak
-    const size = Math.random() * 4 + 2;
+    const size = Math.random() * 5 + 3; 
     p.style.width = `${size}px`;
     p.style.height = `${size}px`;
-    
-    // Posisi horizontal acak
     p.style.left = `${Math.random() * 100}vw`;
     
-    // Gunakan setProperty untuk durasi dan delay agar tidak bentrok dengan CSS shorthand
-    const duration = Math.random() * 10 + 10; // 10-20 detik
-    const delay = Math.random() * 10; // 0-10 detik
+    const duration = Math.random() * 10 + 10;
+    const delay = Math.random() * 10;
     
-    // Kita timpa langsung properti animasinya di sini
+    // MAINKAN DI SINI: Kita set animasinya lewat inline style
     p.style.animation = `fly ${duration}s linear infinite ${delay}s`;
     
     container.appendChild(p);
