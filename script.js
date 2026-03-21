@@ -8,38 +8,36 @@ const nightBg =
 function updateBackground() {
   const h = new Date().getHours();
   const isDay = h >= 6 && h < 18;
+  const body = document.body;
   const searchEl = document.getElementById("search");
-  const root = document.documentElement; // Untuk akses variabel CSS global
   
-  document.body.style.backgroundImage = `url(${isDay ? dayBg : nightBg})`;
+  body.style.backgroundImage = `url(${isDay ? dayBg : nightBg})`;
 
   if (isDay) {
-    // TEMA SIANG
-    document.body.style.color = "#333"; 
+    // --- TEMA SIANG ---
+    body.style.color = "#333";
     document.getElementById("clock").style.color = "#222";
     
-    // Warna Partikel Siang (Dibuat agak orange/cokelat tua biar kontras di kuning)
-    root.style.setProperty('--particle-color', '#E67E22'); 
-    root.style.setProperty('--particle-shadow', 'rgba(230, 126, 34, 0.5)');
+    // Warna Partikel SIANG (Orange gelap agar kontras di kuning)
+    body.style.setProperty('--p-color', '#D35400'); 
+    body.style.setProperty('--p-glow', 'rgba(211, 84, 0, 0.6)');
 
     if(searchEl) {
-        searchEl.style.background = "rgba(0, 0, 0, 0.08)";
-        searchEl.style.color = "#222";
-        searchEl.style.setProperty("--placeholder-color", "#555");
+      searchEl.style.background = "rgba(0, 0, 0, 0.1)";
+      searchEl.style.color = "#222";
     }
   } else {
-    // TEMA MALAM
-    document.body.style.color = "#ffffff";
+    // --- TEMA MALAM ---
+    body.style.color = "#ffffff";
     document.getElementById("clock").style.color = "#ffffff";
     
-    // Warna Partikel Malam (Putih/Biru muda neon biar glowing di gelap)
-    root.style.setProperty('--particle-color', '#00F2FF'); 
-    root.style.setProperty('--particle-shadow', 'rgba(0, 242, 255, 0.8)');
+    // Warna Partikel MALAM (Cyan/Biru neon)
+    body.style.setProperty('--p-color', '#00F2FF'); 
+    body.style.setProperty('--p-glow', 'rgba(0, 242, 255, 0.8)');
 
     if(searchEl) {
-        searchEl.style.background = "rgba(255, 255, 255, 0.2)";
-        searchEl.style.color = "#fff";
-        searchEl.style.setProperty("--placeholder-color", "#eee");
+      searchEl.style.background = "rgba(255, 255, 255, 0.2)";
+      searchEl.style.color = "#fff";
     }
   }
 }
@@ -199,30 +197,21 @@ if (modal && form && editBtn) {
 function createParticles(num) {
   const container = document.querySelector(".particles");
   if (!container) return;
-
-  // Bersihin containernya dulu biar gak numpuk
   container.innerHTML = "";
 
   for (let i = 0; i < num; i++) {
     const p = document.createElement("div");
     p.classList.add("particle");
     
-    // Ukuran acak (3px - 8px)
     const size = Math.random() * 5 + 3;
     p.style.width = `${size}px`;
     p.style.height = `${size}px`;
-    p.style.left = `${Math.random() * 100}vw`; // Pakai VW biar rata
+    p.style.left = `${Math.random() * 100}vw`;
     
-    // Delay dan durasi terbang acak (biar estetik)
-    const delay = Math.random() * 10; // 0-10 detik
-    const duration = Math.random() * 10 + 10; // 10-20 detik
+    const delay = Math.random() * 10;
+    const duration = Math.random() * 10 + 10;
     
-    // Gabungin animasi CSS 'fly' dengan durasi dan delay acak
     p.style.animation = `fly ${duration}s linear infinite ${delay}s`;
-    
-    // Warna kuning serbuk Pikachu (cerah)
-    p.style.background = "#FFDF66"; 
-    p.style.boxShadow = "0 0 10px rgba(255, 223, 102, 0.8)";
     
     container.appendChild(p);
   }
