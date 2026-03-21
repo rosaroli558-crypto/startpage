@@ -172,21 +172,3 @@ body {
   opacity: 0; /* Mulai dari hilang */
   box-shadow: 0 0 5px rgba(255, 203, 5, 0.6); /* Sedikit glow */
 }
-
-/* Animasi Terbang Acak */
-@keyframes fly {
-  0% {
-    transform: translateY(110vh) translateX(0) scale(1);
-    opacity: 0;
-  }
-  10% {
-    opacity: 1; /* Muncul dikit */
-  }
-  90% {
-    opacity: 0.8; /* Masih kelihatan */
-  }
-  100% {
-    transform: translateY(-10vh) translateX(50px) scale(0.5); /* Terbang ke atas acak */
-    opacity: 0;
-  }
-}
