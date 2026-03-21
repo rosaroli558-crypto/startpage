@@ -173,11 +173,36 @@ document.addEventListener("click", (e) => {
   }
 });
 
+// ================= PARTICLES SYSTEM =================
+function createParticles(num) {
+  const container = document.querySelector(".particles");
+  
+  for (let i = 0; i < num; i++) {
+    const p = document.createElement("div");
+    p.classList.add("particle");
+    
+    // Ukuran acak (2px - 6px)
+    const size = Math.random() * 4 + 2;
+    p.style.width = `${size}px`;
+    p.style.height = `${size}px`;
+    
+    // Posisi horizontal acak
+    p.style.left = `${Math.random() * 100}%`;
+    
+    // Kecepatan dan delay acak (biar gak barengan terbangnya)
+    p.style.animationDuration = `${Math.random() * 10 + 10}s`; // 10-20 detik
+    p.style.animationDelay = `${Math.random() * 10}s`;
+    
+    container.appendChild(p);
+  }
+}
+
 // ================= INIT =================
 updateBackground();
 updateGreeting();
 updateClock();
 renderToggle();
+createParticles(30);
 
 setInterval(updateClock, 1000);
 setInterval(updateGreeting, 60000);
