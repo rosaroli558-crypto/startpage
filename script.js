@@ -7,23 +7,29 @@ const nightBg =
 function updateBackground() {
   const h = new Date().getHours();
   const isDay = h >= 6 && h < 18;
+  const searchEl = document.getElementById("search");
   
   // Ganti Gambar
   document.body.style.backgroundImage = `url(${isDay ? dayBg : nightBg})`;
 
-  // Ganti Warna Font & UI
   if (isDay) {
-    // TEMA SIANG (Font Gelap biar kontras sama kuning Pikachu)
-    document.body.style.color = "#333333"; 
-    document.getElementById("clock").style.color = "#222222";
-    document.getElementById("search").style.background = "rgba(0, 0, 0, 0.1)"; // Search bar agak gelap transparan
-    document.getElementById("search").style.color = "#333";
+    // TEMA SIANG
+    document.body.style.color = "#333"; 
+    document.getElementById("clock").style.color = "#222";
+    
+    // Update Input Search
+    searchEl.style.background = "rgba(0, 0, 0, 0.08)"; // Background input agak gelap tipis
+    searchEl.style.color = "#222"; // Warna teks pas ngetik
+    searchEl.style.setProperty("--placeholder-color", "#555"); // Warna placeholder (butuh trik CSS)
   } else {
-    // TEMA MALAM (Font Terang)
+    // TEMA MALAM
     document.body.style.color = "#ffffff";
     document.getElementById("clock").style.color = "#ffffff";
-    document.getElementById("search").style.background = "rgba(255, 255, 255, 0.2)";
-    document.getElementById("search").style.color = "#fff";
+    
+    // Update Input Search
+    searchEl.style.background = "rgba(255, 255, 255, 0.2)";
+    searchEl.style.color = "#fff";
+    searchEl.style.setProperty("--placeholder-color", "#eee");
   }
 }
 
