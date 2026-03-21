@@ -9,10 +9,8 @@ function updateBackground() {
   const h = new Date().getHours();
   const isDay = h >= 6 && h < 18;
   const searchEl = document.getElementById("search");
+  const root = document.documentElement; // Untuk akses variabel CSS global
   
-  if (!searchEl) return; // Prevent errors if DOM isn't ready
-
-  // Ganti Gambar
   document.body.style.backgroundImage = `url(${isDay ? dayBg : nightBg})`;
 
   if (isDay) {
@@ -20,19 +18,29 @@ function updateBackground() {
     document.body.style.color = "#333"; 
     document.getElementById("clock").style.color = "#222";
     
-    // Update Input Search
-    searchEl.style.background = "rgba(0, 0, 0, 0.08)";
-    searchEl.style.color = "#222";
-    searchEl.style.setProperty("--placeholder-color", "#555");
+    // Warna Partikel Siang (Dibuat agak orange/cokelat tua biar kontras di kuning)
+    root.style.setProperty('--particle-color', '#E67E22'); 
+    root.style.setProperty('--particle-shadow', 'rgba(230, 126, 34, 0.5)');
+
+    if(searchEl) {
+        searchEl.style.background = "rgba(0, 0, 0, 0.08)";
+        searchEl.style.color = "#222";
+        searchEl.style.setProperty("--placeholder-color", "#555");
+    }
   } else {
     // TEMA MALAM
     document.body.style.color = "#ffffff";
     document.getElementById("clock").style.color = "#ffffff";
     
-    // Update Input Search
-    searchEl.style.background = "rgba(255, 255, 255, 0.2)";
-    searchEl.style.color = "#fff";
-    searchEl.style.setProperty("--placeholder-color", "#eee");
+    // Warna Partikel Malam (Putih/Biru muda neon biar glowing di gelap)
+    root.style.setProperty('--particle-color', '#00F2FF'); 
+    root.style.setProperty('--particle-shadow', 'rgba(0, 242, 255, 0.8)');
+
+    if(searchEl) {
+        searchEl.style.background = "rgba(255, 255, 255, 0.2)";
+        searchEl.style.color = "#fff";
+        searchEl.style.setProperty("--placeholder-color", "#eee");
+    }
   }
 }
 
