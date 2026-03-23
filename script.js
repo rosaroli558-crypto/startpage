@@ -7,7 +7,7 @@ const nightBg =
 // ================= THEME SYSTEM =================
 function updateBackground() {
   const h = new Date().getHours();
-  const isDay = h >= 6 && h < 18;
+  const isDay = h >= 9 && h < 15;
   const body = document.body;
   const searchEl = document.getElementById("search");
   
